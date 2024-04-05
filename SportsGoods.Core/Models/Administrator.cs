@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace SportsGoods.Data.Models
+namespace SportsGoods.Core.Models
  
 {
     public class Administrator : IdentityUser
