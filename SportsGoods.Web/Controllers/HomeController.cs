@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
+using SportsGoods.Core.Models;
 using SportsGoods.Web.Models;
 using System.Diagnostics;
+using System.Xml;
 
 namespace SportsGoods.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -17,7 +20,7 @@ namespace SportsGoods.Web.Controllers
         {
             return View();
         }
-
+        
         public IActionResult Privacy()
         {
             return View();

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Products>
+	<Product>
+		<Id>invalid-guid-value</Id>
+		<Title>Product 1</Title>
+		<!-- Missing Description element -->
+		<Brand>Brand 1</Brand>
+		<Price>10.99</Price>
+		<Quantity>5</Quantity>
+		<ProductCategory>Category 1</ProductCategory>
+	</Product>
+</Products>

@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	<Product>
+		<Id>b8a6e7d2-aeaf-460d-ae95-d577e6bceadd</Id>
+		<Title>Eco-Friendly Bamboo Toothbrush</Title>
+		<Description>Our bamboo toothbrush is made from sustainable bamboo and BPA-free bristles offering an eco-friendly alternative to traditional plastic toothbrushes. Each purchase contributes to reducing plastic waste and promoting a healthier planet.</Description>
+		<Brand>EcoBrush</Brand>
+		<Price>98.99</Price>
+		<Quantity>37</Quantity>
+		<ProductCategory>Personal Care</ProductCategory>
+	</Product>
+	<Product>
+		<Id>d6f5a472-d5cd-4435-a337-03bc48575bdd</Id>
+		<Title>Reusable Beeswax Food Wraps</Title>
+		<Description>Say goodbye to single-use plastic wraps with our reusable beeswax food wraps. Made from organic cotton and coated with beeswax these wraps are perfect for storing food and reducing plastic waste. They are washable compostable and a sustainable alternative to plastic wraps.</Description>
+		<Brand>BeeWrap</Brand>
+		<Price>94.9</Price>
+		<Quantity>41</Quantity>
+		<ProductCategory>Kitchen &amp; Dining</ProductCategory>
+	</Product>
+	<Product>
+		<Id>9ea5a728-4681-46b4-b334-133e1da0cec3</Id>
+		<Title>Yoga Mat Spray Cleaner</Title>
+		<Description>Keep your yoga mat fresh and clean with our natural yoga mat spray cleaner. Formulated with essential oils and plant-based ingredients it effectively cleanses and refreshes your mat after every session. Free from harsh chemicals it's gentle on both your mat and the environment</Description>
+		<Brand>ZenClean</Brand>
+		<Price>62.13</Price>
+		<Quantity>19</Quantity>
+		<ProductCategory>Fitness Accessories</ProductCategory>
+	</Product>
+	<Product>
+		<Id>e573f329-854b-4bec-b78e-3bb162bf16b7</Id>
+		<Title>Organic Herbal Tea Sampler</Title>
+		<Description>Indulge in a variety of organic herbal teas with our sampler pack. From calming chamomile to invigorating peppermint each tea is carefully selected for its flavor and health benefits. Packed with antioxidants and natural goodness it's the perfect companion for your wellness journey</Description>
+		<Brand>HerbalHarmony</Brand>
+		<Price>21.81</Price>
+		<Quantity>33</Quantity>
+		<ProductCategory>Wellness &amp; Nutrition</ProductCategory>
+	</Product>
+	<Product>
+		<Id>82f892e7-01db-4a79-94fa-afea5874084f</Id>
+		<Title>Macramé Plant Hanger Kit</Title>
+		<Description>Stay hydrated in style with our stainless steel insulated water bottle. Whether you're on the go at the gym or simply enjoying outdoor adventures our water bottle keeps your beverages cold for up to 24 hours or hot for up to 12 hours. With its sleek design and durable construction it's the perfect companion for your active lifestyle.</Description>
+		<Brand>CraftyKnots</Brand>
+		<Price>91.45</Price>
+		<Quantity>3</Quantity>
+		<ProductCategory>Crafts &amp; Hobbies</ProductCategory>
+	</Product>
+	<Product>
+		<Id>4e0ae81a-0b1f-4520-b33c-955724448ed4</Id>
+		<Title>Embroidery Starter Kit</Title>
+		<Description>Achieve radiant glowing skin with our essentials set. Packed with natural ingredients and powerful antioxidants our set includes everything you need for a healthy skincare routine. From cleansers to moisturizers each product is formulated to nourish and rejuvenate your skin leaving it soft smooth and beautifully radiant.</Description>
+		<Brand>StitchCraft</Brand>
+		<Price>25.08</Price>
+		<Quantity>43</Quantity>
+		<ProductCategory>Crafts &amp; Hobbies</ProductCategory>
+	</Product>
+	<Product>
+		<Id>8fa3db3d-b25d-4465-850f-33cdef9bd958</Id>
+		<Title>Stainless Steel Insulated Water Bottle</Title>
+		<Description>Add a touch of elegance to your desk with our artisan wooden phone stand. Handcrafted from sustainable wood each stand is unique in grain and texture. Designed to hold your phone securely in both portrait and landscape orientations it's the perfect blend of style and functionality for your workspace.</Description>
+		<Brand>AquaSteel</Brand>
+		<Price>35.48</Price>
+		<Quantity>33</Quantity>
+		<ProductCategory>Outdoor &amp; Travel</ProductCategory>
+	</Product>
+	<Product>
+		<Id>d262725c-4506-4ca9-a1f2-3a3946c7b4d1</Id>
+		<Title>Glowing Skin Essentials Set</Title>
+		<Description>Make a fashion statement while being environmentally conscious with our canvas eco-tote bag. Made from durable organic cotton canvas our tote bag is spacious enough to carry your essentials and more. Whether you're running errands heading to the beach or grocery shopping it's the perfect eco-friendly alternative to disposable plastic bags.</Description>
+		<Brand>PureGlow</Brand>
+		<Price>53.85</Price>
+		<Quantity>16</Quantity>
+		<ProductCategory>Beauty &amp; Personal Care</ProductCategory>
+	</Product>
+	<Product>
+		<Id>e8eb0efc-5921-4632-b29e-512294a15114</Id>
+		<Title>Artisan Wooden Phone Stand</Title>
+		<Description>Say goodbye to single-use plastic bags with our food-safe silicone storage bags. Perfect for storing snacks sandwiches and leftovers our bags are durable leak-proof and freezer-safe. Made from premium silicone they're an eco-friendly alternative to disposable plastic bags helping you reduce waste and keep your food fresh for longer.</Description>
+		<Brand>WoodCrafted</Brand>
+		<Price>39.59</Price>
+		<Quantity>21</Quantity>
+		<ProductCategory>Home &amp; Office Accessories</ProductCategory>
+	</Product>
+	<Product>
+		<Id>0c729bcc-3502-4fa7-b15d-cfb1f941f01b</Id>
+		<Title>Canvas Eco-Tote Bag</Title>
+		<Description>Keep your lips soft and moisturized with our beeswax lip balm. Enriched with nourishing ingredients like beeswax shea butter and essential oils our lip balm hydrates and protects your lips from dryness and chapping. With its natural formula and delightful flavors it's the perfect everyday essential for healthy kissable lips.</Description>
+		<Brand>EcoChic</Brand>
+		<Price>75.21</Price>
+		<Quantity>3</Quantity>
+		<ProductCategory>Fashion &amp; Accessories</ProductCategory>
+	</Product>
+	<Product>
+		<Id>b8a6e7d2-aeaf-460d-ae95-d577e6bceadd</Id>
+		<Title>Eco-Friendly Bamboo Toothbrush</Title>
+		<Description>Our bamboo toothbrush is made from sustainable bamboo and BPA-free bristles offering an eco-friendly alternative to traditional plastic toothbrushes. Each purchase contributes to reducing plastic waste and promoting a healthier planet.</Description>
+		<Brand>EcoBrush</Brand>
+		<Price>98.99</Price>
+		<Quantity>37</Quantity>
+		<ProductCategory>Personal Care</ProductCategory>
+	</Product>
+	<Product>
+		<Id>052ee496-e9ed-4fe4-9967-2e9169384576</Id>
+		<Title>Test-Product</Title>
+		<Description>  Testtt.</Description>
+		<Brand>teestbrand</Brand>
+		<Price>0</Price>
+		<Quantity>0</Quantity>
+		<ProductCategory>test</ProductCategory>
+	</Product>
+	<Product>
+		<Id>3f8c6aa3-8f47-4f27-94b7-b52db5ab22a0</Id>
+		<Title>Sample Product</Title>
+		<Description>This is a sample product description.</Description>
+		<Brand>SampleBrand</Brand>
+		<Price>19.99</Price>
+		<Quantity>10</Quantity>
+		<ProductCategory>SampleCategory</ProductCategory>
+	</Product>
+	<Product>
+		<Id>7d5b91e4-44a7-4a3e-b9b4-5f55d3b23f75</Id>
+		<Title></Title>
+		<Description>This is another product description.</Description>
+		<Brand>AnotherBrand</Brand>
+		<Price>29.99</Price>
+		<Quantity>5</Quantity>
+		<ProductCategory>AnotherCategory</ProductCategory>
+	</Product>
+	<Product>
+		<Id>8f04f276-3168-4bae-a33c-9b45fc2f24e9</Id>
+		<Description>This is an example product description.</Description>
+		<Brand>ExampleBrand</Brand>
+		<Price>49.99</Price>
+		<Quantity>10</Quantity>
+		<ProductCategory>ExampleCategory</ProductCategory>
+		<Product>
+			<Id>8f04f276-3168-4bae-a33c-9b45fc2f24e9</Id>
+			<Title>ExamplEEEE</Title>
+			<Description>This is an example product description.</Description>
+			<Brand>ExampleBrandDDDDDD</Brand>
+			<Price>49.39</Price>
+			<Quantity>99</Quantity>
+			<ProductCategory>ExampleCategoryYYYYY</ProductCategory>
+		</Product>
+	</Product>
+</dataset>
