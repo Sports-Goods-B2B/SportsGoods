@@ -6,7 +6,6 @@ using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL.EntityConfiguration;
 using System.Reflection;
 
-
 namespace SportsGoods.Data.DAL
 {
     public class ApplicationDbContext : IdentityDbContext<Administrator>, IApplicationDbContext
@@ -22,9 +21,13 @@ namespace SportsGoods.Data.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
         }
 
+        //public Task<int> SaveChangesAsync()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

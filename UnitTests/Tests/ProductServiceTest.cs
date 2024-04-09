@@ -2,6 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using SportsGoods.App.Services;
+using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
 using System.Reflection;
@@ -11,13 +12,12 @@ namespace UnitTests.Tests
     [TestFixture]
     public class ProductServiceTests
     {
-        private ApplicationDbContext _context;
-
+        private ApplicationDbContext? _context = null;
 
         [SetUp]
-        public void Setup()
+        public async Task Setup()
         {
-            var connectionString = "Server=.;Database=SportsGoods;Trusted_Connection=True;TrustServerCertificate=True;";
+            var connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=SportsGoodsTest;Trusted_Connection=True;TrustServerCertificate=True;";
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseSqlServer(connectionString)
@@ -26,12 +26,11 @@ namespace UnitTests.Tests
             _context = new ApplicationDbContext(options);
 
             _context.Products.RemoveRange(_context.Products);
-            _context.SaveChanges();
-
+            await _context.SaveChangesAsync();
         }
 
         [Test]
-        public void SeedProductsFromXml_ValidXml_AddsProductsToDatabase()
+        public async Task SeedProductsFromXml_ValidXml_AddsProductsToDatabase()
         {
             var solutionDirectory = GetSolutionDirectory();
             var testDataDirectory = Path.Combine(solutionDirectory, "SolutionItems");
@@ -41,14 +40,14 @@ namespace UnitTests.Tests
 
             var initialProductCount = _context.Products.Count();
 
-            productService.SeedProductsFromXml(xmlFilePath);
+            await productService.SeedProductsFromXmlAsync(xmlFilePath);
 
             var finalProductCount = _context.Products.Count();
             Assert.That(finalProductCount, Is.GreaterThan(initialProductCount));
         }
 
         [Test]
-        public void SeedProductsFromXml_InvalidXml_DoesNotAddProductsToDatabase()
+        public async Task SeedProductsFromXml_InvalidXml_DoesNotAddProductsToDatabase()
         {
             var xmlFileName = "invalid_products.xml";
             var testDataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "TestData");
@@ -58,7 +57,7 @@ namespace UnitTests.Tests
 
             var initialProductCount = _context.Products.Count();
 
-            productService.SeedProductsFromXml(xmlFilePath);
+            await productService.SeedProductsFromXmlAsync(xmlFilePath);
 
             var finalProductCount = _context.Products.Count();
             Assert.That(initialProductCount, Is.EqualTo(finalProductCount));
@@ -71,8 +70,45 @@ namespace UnitTests.Tests
 
             var productService = new ProductService(_context);
 
-            Assert.Throws<FileNotFoundException>(() => productService.SeedProductsFromXml(nonExistentXmlFilePath));
+            Assert.Throws<FileNotFoundException>(() =>
+            {
+                Task.Run(async () => await productService.SeedProductsFromXmlAsync(nonExistentXmlFilePath)).GetAwaiter().GetResult();
+            });
         }
+
+        [Test]
+        public async Task SeedProductsFromXml_ExistingId_DoesNotAddToDatabase()
+        {
+            var xmlFileName = "existing_product.xml";
+            var testDataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "TestData");
+            var xmlFilePath = Path.Combine(testDataDirectory, xmlFileName);
+
+            var existingProducts = new List<Product>
+    {
+        new Product
+        {
+            Id = new Guid("5f550c07-003e-4534-af07-9abbfacdb540"),
+            Title = "Cosmic Cascade Wall Art",
+            Description = "Tranquil Waters Bath Bomb - Indulge in a relaxing bath experience",
+            Brand = "SerenityStyle",
+            Price = 17.65,
+            Quantity = 90,
+            ProductCategory = "Kitchen &amp; Dining"
+        }
+    };
+
+            var mockProductRepository = new Mock<IProductRepository>();
+            mockProductRepository.Setup(p => p.Products).Returns(existingProducts.AsQueryable());
+            mockProductRepository.Setup(p => p.Add(It.IsAny<Product>())).Verifiable();
+
+            var productService = new ProductService(_context,mockProductRepository.Object);
+
+            await productService.SeedProductsFromXmlAsync(xmlFilePath);
+
+            mockProductRepository.Verify(p => p.Add(It.IsAny<Product>()), Times.Never);
+        }
+
+
         private string GetSolutionDirectory()
         {
             var assemblyLocation = Assembly.GetExecutingAssembly().Location;

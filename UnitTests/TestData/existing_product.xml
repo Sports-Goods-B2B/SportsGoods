@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dataset>
+	<Product>
+		<Id>5f550c07-003e-4534-af07-9abbfacdb540</Id>
+		<Title>Cosmic Cascade Wall Art</Title>
+		<Description>Tranquil Waters Bath Bomb - Indulge in a relaxing bath experience</Description>
+		<Brand>SerenityStyle</Brand>
+		<Price>17.65</Price>
+		<Quantity>90</Quantity>
+		<ProductCategory>Kitchen &amp; Dining</ProductCategory>
+	</Product>
+	<Product>
+		<Id>a0820c36-70b7-4e76-9264-c0b26956f846</Id>
+		<Title>Enchanted Elegance Candle</Title>
+		<Description>Moonlit Garden Wall Art - Add enchantment to your walls</Description>
+		<Brand>EtherealEden</Brand>
+		<Price>75.79</Price>
+		<Quantity>22</Quantity>
+		<ProductCategory>Baby &amp; Nursery</ProductCategory>
+	</Product>
+	<Product>
+		<Id>b57b652b-d756-431e-8d0b-2c38bee8529f</Id>
+		<Title>Mystical Moonbeam Necklace</Title>
+		<Description>Cosmic Adventure Backpack - Explore with style</Description>
+		<Brand>MystiqueMarque</Brand>
+		<Price>67.3</Price>
+		<Quantity>94</Quantity>
+		<ProductCategory>Musical Instruments</ProductCategory>
+	</Product>
+	<Product>
+		<Id>29947099-5e28-4b2c-8e1b-42e00d032372</Id>
+		<Title>Secret Garden Diary</Title>
+		<Description>Serene Sunset Throw Pillow - Enhance your relaxation</Description>
+		<Brand>RadiantRhapsody</Brand>
+		<Price>34.59</Price>
+		<Quantity>16</Quantity>
+		<ProductCategory>Gardening &amp; Outdoor Living</ProductCategory>
+	</Product>
+	<Product>
+		<Id>3d9cd3a1-cdf8-4333-83ec-8567482a4d6a</Id>
+		<Title>Celestial Dreams Comforter Set</Title>
+		<Description>Enchanted Forest Candle - Illuminate your space with magic</Description>
+		<Brand>RadiantRhythms</Brand>
+		<Price>55.41</Price>
+		<Quantity>26</Quantity>
+		<ProductCategory>Beauty &amp; Wellness</ProductCategory>
+	</Product>
+	<Product>
+		<Id>a2c72aa2-af59-445e-9fc7-7b7a5ca22f81</Id>
+		<Title>Oceanic Bliss Perfume</Title>
+		<Description>Mystical Moonlight Necklace - Adorn yourself with celestial charm</Description>
+		<Brand>EnchantedEmporium</Brand>
+		<Price>20.14</Price>
+		<Quantity>43</Quantity>
+		<ProductCategory>Toys &amp; Games</ProductCategory>
+	</Product>
+	<Product>
+		<Id>fac7630d-5d5c-448d-9374-fdf16ba45621</Id>
+		<Title>Twilight Tranquility Music Box</Title>
+		<Description>Secret Garden Notebook - Jot down your secrets</Description>
+		<Brand>EnchantedElegance</Brand>
+		<Price>57.78</Price>
+		<Quantity>60</Quantity>
+		<ProductCategory>Sports &amp; Fitness</ProductCategory>
+	</Product>
+	<Product>
+		<Id>b270b2cf-6146-4b80-b715-e1fd992b6259</Id>
+		<Title>Whispering Woods Wind Chimes</Title>
+		<Description>Celestial Dreams Bedding Set - Drift into dreamland</Description>
+		<Brand>LuminousLuxe</Brand>
+		<Price>12.97</Price>
+		<Quantity>73</Quantity>
+		<ProductCategory>Home Improvement</ProductCategory>
+	</Product>
+	<Product>
+		<Id>9d36e1a8-6803-4368-aa4b-1ec7d69fbf47</Id>
+		<Title>Starlit Symphony Earrings</Title>
+		<Description>Ocean Breeze Perfume - Embrace the freshness</Description>
+		<Brand>EtherealEssence</Brand>
+		<Price>48.43</Price>
+		<Quantity>14</Quantity>
+		<ProductCategory>Art &amp; Craft Supplies</ProductCategory>
+	</Product>
+	<Product>
+		<Id>3bc0dc35-d74c-4608-b6db-62b3b62ec297</Id>
+		<Title>Enigma Enchantment Puzzle</Title>
+		<Description>Twilight Symphony Music Box - Let the melodies soothe your soul</Description>
+		<Brand>LuxeLagoon</Brand>
+		<Price>14.19</Price>
+		<Quantity>46</Quantity>
+		<ProductCategory>Books &amp; Literature</ProductCategory>
+	</Product>
+</dataset>

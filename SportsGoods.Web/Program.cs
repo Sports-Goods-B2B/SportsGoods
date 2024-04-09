@@ -58,7 +58,7 @@ using (var scope = app.Services.CreateScope())
     var solutionDirectory = Path.Combine(assemblyDirectory, "..", "..", "..", "..");
     var testDataDirectory = Path.Combine(solutionDirectory, "SolutionItems");
     var productsXmlPath = Path.Combine(testDataDirectory, "products.xml");
-    productService.SeedProductsFromXml(productsXmlPath);
+    await productService.SeedProductsFromXmlAsync(productsXmlPath);
 }
 
 app.Run();

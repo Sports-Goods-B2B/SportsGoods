@@ -1,4 +1,5 @@
-﻿using SportsGoods.Core.Models;
+﻿using SportsGoods.Core.Interfaces;
+using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
 using System.Xml.Linq;
 
@@ -7,13 +8,19 @@ namespace SportsGoods.App.Services
     public class ProductService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IProductRepository _productRepository;
 
         public ProductService(ApplicationDbContext context)
         {
             _context = context;
         }
+        public ProductService(ApplicationDbContext context,IProductRepository productRepository)
+        {
+            _context = context;
+            _productRepository = productRepository;
+        }
 
-        public void SeedProductsFromXml(string xmlFilePath)
+        public async Task SeedProductsFromXmlAsync(string xmlFilePath)
         {
             XDocument doc = XDocument.Load(xmlFilePath);
 
@@ -33,7 +40,6 @@ namespace SportsGoods.App.Services
                 if (idElement != null && Guid.TryParse(idElement.Value, out productId))
                 {
                     if (!string.IsNullOrEmpty(titleElement?.Value) &&
-                        !string.IsNullOrEmpty(descriptionElement?.Value) &&
                         !string.IsNullOrEmpty(brandElement?.Value) &&
                         priceElement != null && !string.IsNullOrEmpty(priceElement.Value) 
                         && (double)priceElement >= 0 &&
@@ -41,8 +47,10 @@ namespace SportsGoods.App.Services
                         && (int)quantityElement >= 0 &&
                         !string.IsNullOrEmpty(productCategoryElement?.Value))
                     {
-                        var existingProduct = _context.Products.FirstOrDefault(p => p.Id == productId);
-                        if (existingProduct == null)
+                        var existingProductInDb = _context.Products.FirstOrDefault(p => p.Id == productId);
+                        var existingProductInProductList = products.FirstOrDefault(p => p.Id == productId);
+                     
+                        if (existingProductInDb == null && existingProductInProductList == null)
                         {
                             var product = new Product
                             {
@@ -61,7 +69,7 @@ namespace SportsGoods.App.Services
             }
 
             _context.Products.AddRange(products);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
