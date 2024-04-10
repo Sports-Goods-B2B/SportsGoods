@@ -11,7 +11,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsGoods.Api", "SportsGo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsGoods.Data", "SportsGoods.Data\SportsGoods.Data.csproj", "{C8CC07AF-5E8F-465A-AE23-37FA08F357EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportsGoods.Web", "SportsGoods.Web\SportsGoods.Web.csproj", "{30B2622C-F89D-48B9-BF64-AD4071731678}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsGoods.Web", "SportsGoods.Web\SportsGoods.Web.csproj", "{30B2622C-F89D-48B9-BF64-AD4071731678}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{8D9F46F3-AF06-4B62-AE9C-8969F9EB7D61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{34000D19-8A57-4D04-A16F-B1B35C2C1DE7}"
+	ProjectSection(SolutionItems) = preProject
+		SolutionItems\products.xml = SolutionItems\products.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +46,10 @@ Global
 		{30B2622C-F89D-48B9-BF64-AD4071731678}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30B2622C-F89D-48B9-BF64-AD4071731678}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30B2622C-F89D-48B9-BF64-AD4071731678}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D9F46F3-AF06-4B62-AE9C-8969F9EB7D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D9F46F3-AF06-4B62-AE9C-8969F9EB7D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D9F46F3-AF06-4B62-AE9C-8969F9EB7D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D9F46F3-AF06-4B62-AE9C-8969F9EB7D61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
