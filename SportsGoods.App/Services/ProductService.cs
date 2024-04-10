@@ -15,7 +15,7 @@ namespace SportsGoods.App.Services
         {
             _context = context;
         }
-        public ProductService(ApplicationDbContext context,IProductRepository productRepository)
+        public ProductService(ApplicationDbContext context, IProductRepository productRepository)
         {
             _context = context;
             _productRepository = productRepository;
@@ -28,7 +28,7 @@ namespace SportsGoods.App.Services
             var products = new List<Product>();
             foreach (var element in doc.Descendants("Product"))
             {
-                var product = ValidateProduct(element);
+                var product = await ValidateProduct(element,products);
                 if (product != null)
                 {
                     products.Add(product);
@@ -39,7 +39,7 @@ namespace SportsGoods.App.Services
             await _context.SaveChangesAsync();
         }
 
-        private Product? ValidateProduct(XElement element)
+        private async Task<Product?> ValidateProduct(XElement element, List<Product> products)
         {
             var idElement = element.Element("Id");
             var titleElement = element.Element("Title");
@@ -58,20 +58,27 @@ namespace SportsGoods.App.Services
                 quantityElement != null && int.TryParse(quantityElement.Value, out int quantity) && quantity >= 0 &&
                 !string.IsNullOrEmpty(productCategoryElement?.Value))
             {
-                return new Product
+
+                var existingProductInDb = await _productRepository.GetByIdAsync(productId);
+
+                var existingProductInList = products.FirstOrDefault(p => p.Id == productId);
+
+                if (existingProductInDb == null && existingProductInList == null)
                 {
-                    Id = productId,
-                    Title = titleElement.Value,
-                    Description = descriptionElement?.Value ?? string.Empty,
-                    Brand = brandElement.Value,
-                    Price = price,
-                    Quantity = quantity,
-                    ProductCategory = productCategoryElement.Value
-                };
+                    return new Product
+                    {
+                        Id = productId,
+                        Title = titleElement.Value,
+                        Description = descriptionElement?.Value ?? string.Empty,
+                        Brand = brandElement.Value,
+                        Price = price,
+                        Quantity = quantity,
+                        ProductCategory = productCategoryElement.Value
+                    };
+                }
             }
 
-            return null; 
+            return null;
         }
-
     }
 }

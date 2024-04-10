@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using SportsGoods.App.Services;
+using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
+using SportsGoods.Data.Repositories;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddMvc();
 
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<ProductService>();
 
 var app = builder.Build();

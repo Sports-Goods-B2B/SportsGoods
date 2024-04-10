@@ -14,6 +14,11 @@ namespace SportsGoods.Core.Models
         public string Brand { get; set; } = string.Empty;
         public double Price { get; set; }
         public int Quantity { get; set; }
-        public string ProductCategory { get; set; } = string.Empty; 
+        public string ProductCategory { get; set; } = string.Empty;
+
+        public static explicit operator Product(Task<Product?> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

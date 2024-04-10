@@ -12,7 +12,7 @@ namespace UnitTests.Tests
     [TestFixture]
     public class ProductServiceTests
     {
-        private ApplicationDbContext? _context = null;
+        private ApplicationDbContext _context = null!;
 
         [SetUp]
         public async Task Setup()
@@ -82,24 +82,24 @@ namespace UnitTests.Tests
             var xmlFilePath = Path.Combine(testDataDirectory, xmlFileName);
 
             var existingProducts = new List<Product>
-    {
-        new Product
-        {
-            Id = new Guid("5f550c07-003e-4534-af07-9abbfacdb540"),
-            Title = "Cosmic Cascade Wall Art",
-            Description = "Tranquil Waters Bath Bomb - Indulge in a relaxing bath experience",
-            Brand = "SerenityStyle",
-            Price = 17.65,
-            Quantity = 90,
-            ProductCategory = "Kitchen &amp; Dining"
-        }
-    };
-
+            {
+                new Product
+                {
+                    Id = new Guid("5f550c07-003e-4534-af07-9abbfacdb540"),
+                    Title = "Cosmic Cascade Wall Art",
+                    Description = "Tranquil Waters Bath Bomb - Indulge in a relaxing bath experience",
+                    Brand = "SerenityStyle",
+                    Price = 17.65,
+                    Quantity = 90,
+                    ProductCategory = "Kitchen &amp; Dining"
+                }
+            };
+    
             var mockProductRepository = new Mock<IProductRepository>();
-            mockProductRepository.Setup(p => p.Products).Returns(existingProducts.AsQueryable());
+            mockProductRepository.Setup(p => p.GetAllAsync()).ReturnsAsync(existingProducts);
             mockProductRepository.Setup(p => p.Add(It.IsAny<Product>())).Verifiable();
 
-            var productService = new ProductService(_context,mockProductRepository.Object);
+            var productService = new ProductService(_context, mockProductRepository.Object);
 
             await productService.SeedProductsFromXmlAsync(xmlFilePath);
 
