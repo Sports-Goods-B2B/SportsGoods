@@ -1,4 +1,5 @@
-﻿using SportsGoods.Core.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
 using System;
@@ -18,7 +19,15 @@ namespace SportsGoods.Data.Repositories
             _context = context;
         }
 
-        public IQueryable<Product> Products => _context.Products;
+        public async Task<Product> GetByIdAsync(Guid id)
+        {
+            return await _context.Products.FindAsync(id);
+        }
+
+        public async Task<List<Product>> GetAllAsync()
+        {
+            return await _context.Products.ToListAsync();
+        }
 
         public void Add(Product product)
         {

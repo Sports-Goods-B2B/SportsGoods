@@ -9,7 +9,8 @@ namespace SportsGoods.Core.Interfaces
 {
     public interface IProductRepository
     {
-        IQueryable<Product> Products { get; }
+        Task<Product> GetByIdAsync(Guid id);
+        Task<List<Product>> GetAllAsync();
         void Add(Product product);
         Task SaveChangesAsync();
     }

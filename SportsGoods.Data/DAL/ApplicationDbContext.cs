@@ -24,10 +24,5 @@ namespace SportsGoods.Data.DAL
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
         }
-
-        //public Task<int> SaveChangesAsync()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

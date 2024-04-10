@@ -70,10 +70,8 @@ namespace UnitTests.Tests
 
             var productService = new ProductService(_context);
 
-            Assert.Throws<FileNotFoundException>(() =>
-            {
-                Task.Run(async () => await productService.SeedProductsFromXmlAsync(nonExistentXmlFilePath)).GetAwaiter().GetResult();
-            });
+            Assert.ThrowsAsync<FileNotFoundException>(async () =>
+            await productService.SeedProductsFromXmlAsync(nonExistentXmlFilePath));
         }
 
         [Test]
