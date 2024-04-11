@@ -16,4 +16,9 @@
     <ProjectReference Include="..\SportsGoods.Data\SportsGoods.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="CommandHandlers\" />
+  </ItemGroup>
+
 </Project>

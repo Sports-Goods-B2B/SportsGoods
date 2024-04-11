@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsGoods.Core.Models
+namespace SportsGoods.App.DTOs
 {
-    public class Product
+    public class ProductDTO
     {
-        public Guid Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string? Description { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
