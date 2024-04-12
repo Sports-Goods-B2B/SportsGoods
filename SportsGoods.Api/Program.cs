@@ -5,13 +5,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SportsGoods.App.Queries;
+using SportsGoods.App.QueryHandlers;
 using SportsGoods.Core.Interfaces;
 using SportsGoods.Data.DAL;
 using SportsGoods.Data.Repositories;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("Server=.;Database=SportsGoods;Trusted_Connection=True;TrustServerCertificate=True;");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
@@ -21,6 +23,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Configure services
 builder.Services.AddControllers();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllProductsQueryHandler).Assembly));
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "SportsGoods.Api", Version = "v1" });

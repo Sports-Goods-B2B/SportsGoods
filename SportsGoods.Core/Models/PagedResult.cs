@@ -11,5 +11,7 @@ namespace SportsGoods.Core.Models
         public List<T> Items { get; set; }
         public int Page { get; set; }
         public byte PageSize { get; set; }
+        public int TotalCount { get; set; }
+        //public int TotalPages { get; set; }
     }
 }

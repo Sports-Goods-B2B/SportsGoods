@@ -38,5 +38,25 @@ namespace SportsGoods.Data.Repositories
         {
             await _context.SaveChangesAsync();
         }
+
+        public async Task<PagedResult<Product>> GetPagedAsync(int pageNumber, byte pageSize)
+        {
+            int pageSizeInt = pageSize;
+
+            var products = await _context.Products
+              .Skip(pageNumber * pageSize)
+              .Take(pageSizeInt)
+              .ToListAsync();
+
+            var totalCount = await _context.Products.CountAsync(); 
+
+            return new PagedResult<Product>
+            {
+                Items = products,
+                Page = pageNumber,
+                PageSize = pageSize,
+                TotalCount = totalCount
+            };
+        }
     }
 }

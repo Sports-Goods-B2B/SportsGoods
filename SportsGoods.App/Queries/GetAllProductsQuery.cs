@@ -12,7 +12,7 @@ namespace SportsGoods.App.Queries
 {
     public class GetAllProductsQuery :IRequest<PagedResult<ProductDTO>>
     {
-        public int PageNumber { get; set; }
-        public byte PageSize { get; set; }
+        public int PageNumber { get; set; } = 0;
+        public byte PageSize { get; set; } = 10;
     }
 }

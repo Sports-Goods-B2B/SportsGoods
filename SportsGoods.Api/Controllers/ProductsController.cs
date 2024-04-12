@@ -18,9 +18,9 @@ namespace YourApplication.Controllers
         }
 
         [HttpGet("GetAllProducts")]
-        [Route("GetAllProducts")]
-        public async Task<ActionResult<PagedResult<ProductDTO>>> GetAllProducts([FromQuery] GetAllProductsQuery query)
+        public async Task<ActionResult<PagedResult<ProductDTO>>> GetAllProducts([FromQuery] int pageNumber = 0, [FromQuery] byte pageSize = 10)
         {
+            var query = new GetAllProductsQuery { PageNumber = pageNumber, PageSize = pageSize };
             var result = await _mediator.Send(query);
             return Ok(result);
         }

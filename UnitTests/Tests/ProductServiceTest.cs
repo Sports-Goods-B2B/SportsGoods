@@ -7,7 +7,7 @@ using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
 using System.Reflection;
 
-namespace UnitTests.Tests
+namespace SportsGoods.App.Tests
 {
     [TestFixture]
     public class ProductServiceTests

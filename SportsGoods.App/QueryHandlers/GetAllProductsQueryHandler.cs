@@ -23,15 +23,29 @@ namespace SportsGoods.App.QueryHandlers
 
         public async Task<PagedResult<ProductDTO>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
-            var products = await _productRepository.GetAllAsync();
-            var productDtos = products.Select(p => p.ConvertToDto()).ToList();
+            if (request.PageNumber < 0 || request.PageSize < 0)
+            {
+                throw new ArgumentException("Page number and page size must be 0 or greater.");
+            }
 
-            return new PagedResult<ProductDTO>
+            var pagedProducts = await _productRepository.GetPagedAsync(request.PageNumber, request.PageSize);
+
+            var productDtos = new List<ProductDTO>();
+
+            foreach (var product in pagedProducts.Items)
+            {
+                productDtos.Add(product.ConvertToDto());
+            }
+
+            var pagedResult = new PagedResult<ProductDTO>
             {
                 Items = productDtos,
                 Page = request.PageNumber,
-                PageSize = request.PageSize
+                PageSize = request.PageSize,
+                TotalCount = pagedProducts.TotalCount
             };
+
+            return pagedResult;
         }
     }
 }
