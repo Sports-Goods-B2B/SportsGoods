@@ -35,7 +35,7 @@ namespace SportsGoods.App.Tests
             var solutionDirectory = GetSolutionDirectory();
             var testDataDirectory = Path.Combine(solutionDirectory, "SolutionItems");
             var xmlFilePath = Path.Combine(testDataDirectory, "products.xml");
-
+          
             var repositoryMock = new Mock<IProductRepository>();
 
             var productService = new ProductService(_context, repositoryMock.Object);
@@ -47,7 +47,6 @@ namespace SportsGoods.App.Tests
             var finalProductCount = _context.Products.Count();
 
             Assert.That(finalProductCount, Is.GreaterThan(initialProductCount));
-
         }
 
         [Test]
