@@ -7,7 +7,7 @@ using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
 using System.Reflection;
 
-namespace UnitTests.Tests
+namespace SportsGoods.App.Tests
 {
     [TestFixture]
     public class ProductServiceTests
@@ -36,14 +36,18 @@ namespace UnitTests.Tests
             var testDataDirectory = Path.Combine(solutionDirectory, "SolutionItems");
             var xmlFilePath = Path.Combine(testDataDirectory, "products.xml");
 
-            var productService = new ProductService(_context);
+            var repositoryMock = new Mock<IProductRepository>();
+
+            var productService = new ProductService(_context, repositoryMock.Object);
 
             var initialProductCount = _context.Products.Count();
 
             await productService.SeedProductsFromXmlAsync(xmlFilePath);
 
             var finalProductCount = _context.Products.Count();
+
             Assert.That(finalProductCount, Is.GreaterThan(initialProductCount));
+
         }
 
         [Test]

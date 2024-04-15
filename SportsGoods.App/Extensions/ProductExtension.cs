@@ -1,0 +1,21 @@
+﻿using SportsGoods.App.DTOs;
+using SportsGoods.Core.Models;
+
+namespace SportsGoods.App.Extensions
+{
+    public static class ProductExtension
+    {
+        public static ProductDTO ConvertToDto(this Product product)
+        {
+            return new ProductDTO
+            {
+                Title = product.Title,
+                Description = product.Description,
+                Brand = product.Brand,
+                Price = product.Price,
+                Quantity = product.Quantity,
+                ProductCategory = product.ProductCategory
+            };
+        }
+    }
+}

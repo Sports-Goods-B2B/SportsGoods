@@ -2,11 +2,6 @@
 using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SportsGoods.Data.Repositories
 {
@@ -37,6 +32,26 @@ namespace SportsGoods.Data.Repositories
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<PagedResult<Product>> GetPagedAsync(int pageNumber, byte pageSize)
+        {
+            int pageSizeInt = pageSize;
+
+            var products = await _context.Products
+              .Skip(pageNumber * pageSize)
+              .Take(pageSizeInt)
+              .ToListAsync();
+
+            var totalCount = await _context.Products.CountAsync(); 
+
+            return new PagedResult<Product>
+            {
+                Items = products,
+                Page = pageNumber,
+                PageSize = pageSize,
+                TotalCount = totalCount
+            };
         }
     }
 }

@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using SportsGoods.Core.Models;
 using SportsGoods.Web.Models;
 using System.Diagnostics;
-using System.Xml;
 
-namespace SportsGoods.Web.Controllers
+namespace SportsGoods.Api.Controllers
 {
     public class HomeController : Controller
     {
