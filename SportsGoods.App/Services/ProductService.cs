@@ -1,7 +1,6 @@
 ﻿using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
-using SportsGoods.Data.DAL.EntityConfiguration;
 using System.Xml.Linq;
 
 namespace SportsGoods.App.Services

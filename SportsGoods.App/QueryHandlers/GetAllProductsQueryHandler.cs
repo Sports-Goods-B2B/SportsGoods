@@ -4,11 +4,6 @@ using SportsGoods.App.Extensions;
 using SportsGoods.App.Queries;
 using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SportsGoods.App.QueryHandlers
 {
@@ -30,22 +25,14 @@ namespace SportsGoods.App.QueryHandlers
 
             var pagedProducts = await _productRepository.GetPagedAsync(request.PageNumber, request.PageSize);
 
-            var productDtos = new List<ProductDTO>();
 
-            foreach (var product in pagedProducts.Items)
+            return new PagedResult<ProductDTO>
             {
-                productDtos.Add(product.ConvertToDto());
-            }
-
-            var pagedResult = new PagedResult<ProductDTO>
-            {
-                Items = productDtos,
+                Items = pagedProducts.Items.Select(x => x.ConvertToDto()).ToList(),
                 Page = request.PageNumber,
                 PageSize = request.PageSize,
                 TotalCount = pagedProducts.TotalCount
             };
-
-            return pagedResult;
         }
     }
 }

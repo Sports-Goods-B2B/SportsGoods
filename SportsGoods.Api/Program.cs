@@ -1,15 +1,9 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using SportsGoods.App.Queries;
 using SportsGoods.App.QueryHandlers;
 using SportsGoods.Core.Interfaces;
 using SportsGoods.Data.DAL;
 using SportsGoods.Data.Repositories;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
