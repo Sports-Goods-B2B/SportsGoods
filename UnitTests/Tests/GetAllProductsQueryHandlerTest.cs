@@ -51,15 +51,16 @@ namespace SportsGoods.App.Tests.Tests
         }
 
         [Test]
-        public async Task Handle_ReturnsCorrectPageBasedOnPageSize()
+        [TestCase(10, 10)]
+        [TestCase(5, 5)]
+        [TestCase(20, 20)]
+        public async Task Handle_ReturnsCorrectPageBasedOnPageSize(byte pageSize, int expectedCount)
         {
             var pageNumber = 1;
-            byte[] pageSizes = { 10, 5, 20 };
-            var expectedCounts = new[] { 10, 5, 20 };
             var repositoryMock = new Mock<IProductRepository>();
 
             repositoryMock.Setup(repo => repo.GetPagedAsync(It.IsAny<int>(), It.IsAny<byte>()))
-                          .ReturnsAsync((int page, byte pageSize) =>
+                          .ReturnsAsync((int page, byte size) =>
                           {
                               var products = Enumerable.Range(1, 100)
                                                         .Select(i => new Product
@@ -74,39 +75,36 @@ namespace SportsGoods.App.Tests.Tests
                                                             }
                                                         })
                                                         .ToList();
+
                               var pagedProducts = new PagedResult<Product>
                               {
-                                  Items = products.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
+                                  Items = products.Skip((page - 1) * size).Take(size).ToList(),
                                   Page = page,
-                                  PageSize = pageSize,
+                                  PageSize = size,
                                   TotalCount = products.Count
                               };
-
                               return pagedProducts;
                           });
 
             var handler = new GetAllProductsQueryHandler(repositoryMock.Object);
-            var queries = pageSizes.Select(pageSize => new GetAllProductsQuery
-            { PageNumber = pageNumber, PageSize = pageSize });
 
-            foreach (var query in queries)
-            {
-                var result = await handler.Handle(query, CancellationToken.None);
+            var query = new GetAllProductsQuery { PageNumber = pageNumber, PageSize = pageSize };
 
-                Assert.That(result, Is.Not.Null);
-                Assert.That(result.Items.Count
-                    , Is.EqualTo(expectedCounts[Array.IndexOf(pageSizes, query.PageSize)]));
-            }
+            var result = await handler.Handle(query, CancellationToken.None);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Items.Count, Is.EqualTo(expectedCount));
         }
         [Test]
-        public async Task Handle_ThrowsException_WhenPageNumberOrPageSizeBelowZero()
+        [TestCase(-1, 10)]
+        [TestCase(-1, 5)]
+        [TestCase(-1, 20)]
+        public async Task Handle_ThrowsException_WhenPageNumberOrPageSizeBelowZero(int pageNumber, byte pageSize)
         {
-            var pageNumber = -1;
-            byte[] pageSizes = { 10, 5, 20 };
             var repositoryMock = new Mock<IProductRepository>();
 
             repositoryMock.Setup(repo => repo.GetPagedAsync(It.IsAny<int>(), It.IsAny<byte>()))
-                          .ReturnsAsync((int page, byte pageSize) =>
+                          .ReturnsAsync((int page, byte size) =>
                           {
                               var products = Enumerable.Range(1, 100)
                                                         .Select(i => new Product
@@ -126,77 +124,64 @@ namespace SportsGoods.App.Tests.Tests
                               {
                                   Items = new List<Product>(),
                                   Page = page,
-                                  PageSize = pageSize,
+                                  PageSize = size,
                                   TotalCount = totalCount
                               };
                           });
 
             var handler = new GetAllProductsQueryHandler(repositoryMock.Object);
-            var queries = pageSizes.Select(pageSize => new GetAllProductsQuery
-            { PageNumber = pageNumber, PageSize = pageSize });
 
-            foreach (var query in queries)
+            try
             {
-                try
-                {
-                    await handler.Handle(query, CancellationToken.None);
-                    Assert.Fail("Expected exception not thrown");
-                }
-                catch (ArgumentException ex)
-                {
-                    Assert.That(ex.Message, Is.EqualTo("Page number and page size must be 0 or greater."));
-                }
+                await handler.Handle(new GetAllProductsQuery { PageNumber = pageNumber, PageSize = pageSize }, CancellationToken.None);
+                Assert.Fail("Expected exception not thrown");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.That(ex.Message, Is.EqualTo("Page number and page size must be 0 or greater."));
             }
         }
         [Test]
-        public async Task Handle_ReturnsEmptyList_WhenPageNumberOutOfRange()
+        [TestCase(100, 10)]
+        [TestCase(200, 5)]
+        [TestCase(50, 20)]
+        public async Task Handle_ReturnsEmptyList_WhenPageNumberOutOfRange(int pageNumber, byte pageSize)
         {
-            var outOfRangePageNumbers = new[] { 100, 200, 50 };
-            byte[] pageSizes = { 10, 5, 20 };
             var repositoryMock = new Mock<IProductRepository>();
 
             repositoryMock.Setup(repo => repo.GetPagedAsync(It.IsAny<int>(), It.IsAny<byte>()))
-                          .ReturnsAsync((int page, byte pageSize) =>
+                          .ReturnsAsync((int page, byte size) =>
                           {
                               var products = Enumerable.Range(1, 100)
-                                                        .Select(i => new Product
-                                                        {
-                                                            Id = Guid.NewGuid(),
-                                                            Title = $"Product {i}",
-                                                            Price = i * 10,
-                                                            Brand = new Brand
-                                                            {
-                                                                Id = Guid.NewGuid(),
-                                                                Name = $"Brand {i}"
-                                                            }
-                                                        })
+                                                         .Select(i => new Product
+                                                         {
+                                                             Id = Guid.NewGuid(),
+                                                             Title = $"Product {i}",
+                                                             Price = i * 10,
+                                                             Brand = new Brand
+                                                             {
+                                                                 Id = Guid.NewGuid(),
+                                                                 Name = $"Brand {i}"
+                                                             }
+                                                         })
                                                         .ToList();
                               var totalCount = products.Count;
                               return new PagedResult<Product>
                               {
                                   Items = new List<Product>(),
                                   Page = page,
-                                  PageSize = pageSize,
+                                  PageSize = size,
                                   TotalCount = totalCount
                               };
                           });
 
             var handler = new GetAllProductsQueryHandler(repositoryMock.Object);
+            var query = new GetAllProductsQuery { PageNumber = pageNumber, PageSize = pageSize };
+            var result = await handler.Handle(query, CancellationToken.None);
 
-            foreach (var pageNumber in outOfRangePageNumbers)
-            {
-                var queries = pageSizes.Select(pageSize => new GetAllProductsQuery
-                { PageNumber = pageNumber, PageSize = pageSize });
-
-                foreach (var query in queries)
-                {
-                    var result = await handler.Handle(query, CancellationToken.None);
-
-                    Assert.That(result, Is.Not.Null);
-                    Assert.That(result.Items, Is.Empty);
-                    Assert.That(query.PageSize, Is.EqualTo(result.PageSize));
-                }
-            }
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Items, Is.Empty);
+            Assert.That(query.PageSize, Is.EqualTo(result.PageSize));
         }
         private void SeedTestData()
         {
@@ -226,6 +211,7 @@ namespace SportsGoods.App.Tests.Tests
             _context.Products.AddRange(products);
             _context.SaveChanges();
         }
+
         private PagedResult<Product> GetTestProducts()
         {
             var products = new List<Product>
