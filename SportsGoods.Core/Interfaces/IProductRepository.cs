@@ -7,7 +7,6 @@ namespace SportsGoods.Core.Interfaces
         Task<Product> GetByIdAsync(Guid id);
         Task<List<Product>> GetAllAsync();
         Task<PagedResult<Product>> GetPagedAsync(int pageNumber, byte pageSize);
-
         void Add(Product product);
         Task SaveChangesAsync();
     }
