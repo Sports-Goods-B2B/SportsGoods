@@ -18,6 +18,8 @@ namespace SportsGoods.Data.DAL
 
         public DbSet<Administrator> Administrators { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Media> Media { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

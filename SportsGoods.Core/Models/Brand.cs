@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SportsGoods.Core.Models
+﻿namespace SportsGoods.Core.Models
 {
     public class Brand
     {
         public Guid Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public required string Name { get; set; }
         public string History { get; set; } = string.Empty;
-        public string PictureUrl { get; set; } = string.Empty;
+        public Media? Picture { get; set; }
     }
 }
