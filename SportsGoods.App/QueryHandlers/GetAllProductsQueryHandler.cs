@@ -4,11 +4,6 @@ using SportsGoods.App.Extensions;
 using SportsGoods.App.Queries;
 using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SportsGoods.App.QueryHandlers
 {

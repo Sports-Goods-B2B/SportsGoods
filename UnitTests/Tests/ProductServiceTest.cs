@@ -5,7 +5,6 @@ using SportsGoods.App.Services;
 using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
-using System.Net.NetworkInformation;
 using System.Reflection;
 
 namespace SportsGoods.App.Tests

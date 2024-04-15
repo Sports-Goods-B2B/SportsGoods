@@ -7,11 +7,6 @@ using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
 using SportsGoods.Data.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SportsGoods.App.Tests.Tests
 {
@@ -38,7 +33,6 @@ namespace SportsGoods.App.Tests.Tests
         [Test]
         public async Task Handle_ReturnsPagedResultWithProductDTOs()
         {
-
             var pageNumber = 1;
             byte pageSize = 10;
 
