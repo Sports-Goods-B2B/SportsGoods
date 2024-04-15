@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
-using SportsGoods.Data.DAL.EntityConfiguration;
 using System.Reflection;
 
 namespace SportsGoods.Data.DAL
