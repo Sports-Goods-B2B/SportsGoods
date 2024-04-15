@@ -25,22 +25,13 @@ namespace SportsGoods.App.QueryHandlers
 
             var pagedProducts = await _productRepository.GetPagedAsync(request.PageNumber, request.PageSize);
 
-            var productDtos = new List<ProductDTO>();
-
-            foreach (var product in pagedProducts.Items)
+            return new PagedResult<ProductDTO>
             {
-                productDtos.Add(product.ConvertToDto());
-            }
-
-            var pagedResult = new PagedResult<ProductDTO>
-            {
-                Items = productDtos,
+                Items = pagedProducts.Items.Select(x => x.ConvertToDto()).ToList(),
                 Page = request.PageNumber,
                 PageSize = request.PageSize,
                 TotalCount = pagedProducts.TotalCount
             };
-
-            return pagedResult;
         }
     }
 }

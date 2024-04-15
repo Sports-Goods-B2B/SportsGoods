@@ -47,6 +47,7 @@ namespace SportsGoods.App.Tests
             var finalProductCount = _context.Products.Count();
 
             Assert.That(finalProductCount, Is.GreaterThan(initialProductCount));
+
         }
 
         [Test]
