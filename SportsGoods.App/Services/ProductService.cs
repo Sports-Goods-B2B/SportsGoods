@@ -70,7 +70,13 @@ namespace SportsGoods.App.Services
                         Id = productId,
                         Title = titleElement.Value,
                         Description = descriptionElement?.Value ?? string.Empty,
-                        Brand = brandElement.Value,
+                        Brand = new Brand
+                        {
+                            Id = Guid.NewGuid(),
+                            Name = brandElement.Value,
+                            History = "test History",
+                            PictureUrl = "testUrl"
+                        },
                         Price = price,
                         Quantity = quantity,
                         ProductCategory = productCategoryElement.Value

@@ -5,6 +5,7 @@ using SportsGoods.App.Services;
 using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
+using System.Net.NetworkInformation;
 using System.Reflection;
 
 namespace SportsGoods.App.Tests
@@ -84,14 +85,23 @@ namespace SportsGoods.App.Tests
             var testDataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "TestData");
             var xmlFilePath = Path.Combine(testDataDirectory, xmlFileName);
 
+
+
             var existingProducts = new List<Product>
             {
+                
                 new Product
                 {
                     Id = new Guid("5f550c07-003e-4534-af07-9abbfacdb540"),
                     Title = "Cosmic Cascade Wall Art",
                     Description = "Tranquil Waters Bath Bomb - Indulge in a relaxing bath experience",
-                    Brand = "SerenityStyle",
+                    Brand = new Brand
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "SerenityStyle",
+                        History = "Some History",
+                        PictureUrl = "someUrl.png"
+                    },
                     Price = 17.65,
                     Quantity = 90,
                     ProductCategory = "Kitchen &amp; Dining"
