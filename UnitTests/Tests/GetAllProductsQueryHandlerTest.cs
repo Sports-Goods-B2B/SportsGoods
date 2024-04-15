@@ -72,11 +72,11 @@ namespace SportsGoods.App.Tests.Tests
                                   PageSize = size,
                                   TotalCount = products.Count
                               };
-
                               return pagedProducts;
                           });
 
             var handler = new GetAllProductsQueryHandler(repositoryMock.Object);
+          
             var query = new GetAllProductsQuery { PageNumber = pageNumber, PageSize = pageSize };
 
             var result = await handler.Handle(query, CancellationToken.None);
@@ -145,7 +145,6 @@ namespace SportsGoods.App.Tests.Tests
                           });
 
             var handler = new GetAllProductsQueryHandler(repositoryMock.Object);
-
             var query = new GetAllProductsQuery { PageNumber = pageNumber, PageSize = pageSize };
             var result = await handler.Handle(query, CancellationToken.None);
 

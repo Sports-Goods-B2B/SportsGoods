@@ -25,7 +25,6 @@ namespace SportsGoods.App.QueryHandlers
 
             var pagedProducts = await _productRepository.GetPagedAsync(request.PageNumber, request.PageSize);
 
-
             return new PagedResult<ProductDTO>
             {
                 Items = pagedProducts.Items.Select(x => x.ConvertToDto()).ToList(),

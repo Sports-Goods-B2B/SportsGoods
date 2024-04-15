@@ -35,7 +35,7 @@ namespace SportsGoods.App.Tests
             var solutionDirectory = GetSolutionDirectory();
             var testDataDirectory = Path.Combine(solutionDirectory, "SolutionItems");
             var xmlFilePath = Path.Combine(testDataDirectory, "products.xml");
-
+          
             var repositoryMock = new Mock<IProductRepository>();
 
             var productService = new ProductService(_context, repositoryMock.Object);
