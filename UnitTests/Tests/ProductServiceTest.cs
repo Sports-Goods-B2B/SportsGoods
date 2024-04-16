@@ -98,8 +98,7 @@ namespace SportsGoods.App.Tests
                     {
                         Id = Guid.NewGuid(),
                         Name = "SerenityStyle",
-                        History = "Some History",
-                        PictureUrl = "someUrl.png"
+                        History = "Some History"
                     },
                     Price = 17.65,
                     Quantity = 90,

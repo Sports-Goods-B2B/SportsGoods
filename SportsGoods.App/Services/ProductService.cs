@@ -9,11 +9,11 @@ namespace SportsGoods.App.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly IProductRepository _productRepository;
-
         public ProductService(ApplicationDbContext context)
         {
             _context = context;
         }
+
         public ProductService(ApplicationDbContext context, IProductRepository productRepository)
         {
             _context = context;
@@ -24,66 +24,70 @@ namespace SportsGoods.App.Services
         {
             XDocument doc = XDocument.Load(xmlFilePath);
 
-            var products = new List<Product>();
-            foreach (var element in doc.Descendants("Product"))
+            var products = ExtractProducts(doc);
+
+            foreach (var product in products)
             {
-                var product = await ValidateProduct(element,products);
-                if (product != null)
-                {
-                    products.Add(product);
-                }
+                await ValidateAndAddProductAsync(product);
             }
 
-            _context.Products.AddRange(products);
             await _context.SaveChangesAsync();
         }
 
-        private async Task<Product?> ValidateProduct(XElement element, List<Product> products)
+        private List<Product> ExtractProducts(XDocument doc)
         {
-            var idElement = element.Element("Id");
-            var titleElement = element.Element("Title");
-            var descriptionElement = element.Element("Description");
-            var brandElement = element.Element("Brand");
-            var priceElement = element.Element("Price");
-            var quantityElement = element.Element("Quantity");
-            var productCategoryElement = element.Element("ProductCategory");
+            var products = new List<Product>();
 
-            Guid productId;
+            var brands = _context.Brands.ToDictionary(x => x.Name, x => x);
 
-            if (idElement != null && Guid.TryParse(idElement.Value, out productId) &&
-                !string.IsNullOrEmpty(titleElement?.Value) &&
-                !string.IsNullOrEmpty(brandElement?.Value) &&
-                priceElement != null && double.TryParse(priceElement.Value, out double price) && price >= 0 &&
-                quantityElement != null && int.TryParse(quantityElement.Value, out int quantity) && quantity >= 0 &&
-                !string.IsNullOrEmpty(productCategoryElement?.Value))
+            foreach (var element in doc.Descendants("Product"))
             {
+                var productName = element.Element("Title")?.Value;
+                var productBrandName = element.Element("Brand")?.Value;
 
-                var existingProductInDb = await _productRepository.GetByIdAsync(productId);
-
-                var existingProductInList = products.FirstOrDefault(p => p.Id == productId);
-
-                if (existingProductInDb == null && existingProductInList == null)
+                if (!string.IsNullOrEmpty(productName) && !string.IsNullOrEmpty(productBrandName))
                 {
-                    return new Product
+                    var product = new Product
                     {
-                        Id = productId,
-                        Title = titleElement.Value,
-                        Description = descriptionElement?.Value ?? string.Empty,
-                        Brand = new Brand
-                        {
-                            Id = Guid.NewGuid(),
-                            Name = brandElement.Value,
-                            History = "test History",
-                            PictureUrl = "testUrl"
-                        },
-                        Price = price,
-                        Quantity = quantity,
-                        ProductCategory = productCategoryElement.Value
+                        Id = Guid.Parse(element.Element("Id")?.Value),
+                        Title = productName,
+                        Description = element.Element("Description")?.Value,
+                        Price = double.Parse(element.Element("Price")?.Value),
+                        Quantity = int.Parse(element.Element("Quantity")?.Value),
+                        ProductCategory = element.Element("ProductCategory")?.Value,
                     };
+
+                        product.BrandId = brands[productBrandName].Id;
+                   
+                    products.Add(product);
                 }
             }
+            return products;
+        }
 
-            return null;
+
+
+        private async Task ValidateAndAddProductAsync(Product product)
+        {
+            if (!ValidateProduct(product))
+            {
+                return;
+            }
+
+            if (_context.Products.Any(p => p.Id == product.Id))
+            {
+                return;
+            }
+
+            _context.Products.Add(product);
+        }
+
+        private bool ValidateProduct(Product product)
+        {
+            return !string.IsNullOrEmpty(product.Title) &&
+                   !string.IsNullOrEmpty(product.ProductCategory) &&
+                   product.Price >= 0 &&
+                   product.Quantity >= 0;
         }
     }
 }
