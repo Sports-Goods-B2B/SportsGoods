@@ -5,6 +5,7 @@ using SportsGoods.Core.Models;
 namespace SportsGoods.Data.DAL.EntityConfiguration
 {
     public class BrandConfiguration: IEntityTypeConfiguration<Brand>
+
     {
         public void Configure(EntityTypeBuilder<Brand> builder)
         {
@@ -14,6 +15,10 @@ namespace SportsGoods.Data.DAL.EntityConfiguration
 
             builder.Property(p => p.Name)
             .IsRequired();
+
+            builder.Property(p => p.History);
+
+            builder.Property(p => p.Picture);
 
             builder.ToTable("Brands");
         }

@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using SportsGoods.Core.Models;
 using SportsGoods.Web.Models;
 using System.Diagnostics;
-using System.Xml;
 
 namespace SportsGoods.Api.Controllers
 {

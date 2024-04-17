@@ -1,7 +1,6 @@
 ﻿using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
-using System.Security.Cryptography;
 using System.Xml.Linq;
 
 namespace SportsGoods.App.Services
