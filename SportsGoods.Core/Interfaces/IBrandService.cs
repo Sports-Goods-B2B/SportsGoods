@@ -2,6 +2,6 @@
 {
     public interface IBrandService
     {
-        Task<Guid?> GetBrandIdByNameAsync(string brandName);
+        Task ExtractBrandsFromXmlAsync(string xmlFilePath);
     }
 }

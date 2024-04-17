@@ -1,6 +1,7 @@
 ﻿using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
+using System.Security.Cryptography;
 using System.Xml.Linq;
 
 namespace SportsGoods.App.Services
@@ -42,24 +43,40 @@ namespace SportsGoods.App.Services
 
             foreach (var element in doc.Descendants("Product"))
             {
-                var productName = element.Element("Title")?.Value;
+               var productName = element.Element("Title")?.Value;
                 var productBrandName = element.Element("Brand")?.Value;
 
                 if (!string.IsNullOrEmpty(productName) && !string.IsNullOrEmpty(productBrandName))
                 {
-                    var product = new Product
+                    Guid id;
+                    Guid.TryParse(element.Element("Id")?.Value, out id);
+
+                    if (brands.TryGetValue(productBrandName, out var brand) && id != Guid.Empty)
                     {
-                        Id = Guid.Parse(element.Element("Id")?.Value),
-                        Title = productName,
-                        Description = element.Element("Description")?.Value,
-                        Price = double.Parse(element.Element("Price")?.Value),
-                        Quantity = int.Parse(element.Element("Quantity")?.Value),
-                        ProductCategory = element.Element("ProductCategory")?.Value,
-                    };
+                        var product = new Product
+                        {
+                            Id = id,
+                            Title = productName,
+                            Description = element.Element("Description")?.Value,
+                            Price = double.Parse(element.Element("Price")?.Value),
+                            Quantity = int.Parse(element.Element("Quantity")?.Value),
+                            ProductCategory = element.Element("ProductCategory")?.Value,
+                            BrandId = brand.Id
+                        };
 
                         product.BrandId = brands[productBrandName].Id;
-                   
-                    products.Add(product);
+
+                        products.Add(product);
+                    }
+                   else
+                    {
+                        _context.Brands.Add(new Brand
+                        {
+                            Id = Guid.NewGuid(),
+                            Name = productBrandName,
+                            History = "historyPlaceholder"
+                        });
+                    }
                 }
             }
             return products;

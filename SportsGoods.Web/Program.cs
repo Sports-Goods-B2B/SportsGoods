@@ -60,15 +60,10 @@ using (var scope = app.Services.CreateScope())
     var productService = scope.ServiceProvider.GetRequiredService<ProductService>();
     var brandService = scope.ServiceProvider.GetRequiredService<BrandService>();
 
-    var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-    var assemblyDirectory = Path.GetDirectoryName(assemblyLocation);
-    var solutionDirectory = Path.Combine(assemblyDirectory, "..", "..", "..", "..");
-    var testDataDirectory = Path.Combine(solutionDirectory, "SolutionItems");
-    var productsXmlPath = Path.Combine(testDataDirectory, "products.xml");
-
-    var orchestrator = new Orchestrator(brandService, productService);
-    await orchestrator.RunAsync(productsXmlPath);
-
+    var brandHandler = new BrandHandler(brandService);
+    var productHandler = new ProductHandler(productService);
+    brandHandler.SetNextHandler(productHandler);
+    await brandHandler.HandleDataFromXML();
 }
 
 app.Run();

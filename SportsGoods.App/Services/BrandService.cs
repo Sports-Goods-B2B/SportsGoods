@@ -10,10 +10,16 @@ namespace SportsGoods.App.Services
 
     {
         private readonly ApplicationDbContext _context;
+        private readonly IBrandRepository _brandRepository;
 
         public BrandService(ApplicationDbContext context)
         {
             _context = context;
+        }
+        public BrandService(ApplicationDbContext context, IBrandRepository brandRepository)
+        {
+            _context = context;
+            _brandRepository = brandRepository;
         }
 
         public async Task ExtractBrandsFromXmlAsync(string xmlFilePath)
@@ -33,13 +39,7 @@ namespace SportsGoods.App.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Guid?> GetBrandIdByNameAsync(string brandName)
-        {
-            var brand = await _context.Brands.FirstOrDefaultAsync(b => b.Name == brandName);
-            return brand?.Id;
-        }
-
-        public async Task CreateBrandIfNotExistingAsync(Brand brand)
+        private async Task CreateBrandIfNotExistingAsync(Brand brand)
         {
             var existingBrand = await _context.Brands.FirstOrDefaultAsync(b => b.Name == brand.Name);
 
@@ -51,6 +51,7 @@ namespace SportsGoods.App.Services
                     Name = brand.Name,
                     History = "History placeholder"
                 };
+
                 _context.Brands.Add(newBrand);
             }
         }

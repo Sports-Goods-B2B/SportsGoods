@@ -12,21 +12,40 @@ namespace SportsGoods.App.Tests
     [TestFixture]
     public class ProductServiceTests
     {
-        private ApplicationDbContext _context = null!;
+        private static ApplicationDbContext _context = null!;
+        private ApplicationDbContext _testContext = null!;
+
+
+        [OneTimeSetUp]
+        public static async Task OneTimeSetUp()
+        {
+            var connectionString = "Server=.;Database=SportsGoods;Trusted_Connection=True;TrustServerCertificate=True;";
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseSqlServer(connectionString)
+                .Options;
+
+            _context = new ApplicationDbContext(options);
+
+            await _context.Database.MigrateAsync();
+        }
 
         [SetUp]
         public async Task Setup()
         {
-            var connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=SportsGoodsTest;Trusted_Connection=True;TrustServerCertificate=True;";
+            var testConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=SportsGoodsTest;Trusted_Connection=True;TrustServerCertificate=True;";
 
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer(connectionString)
-            .Options;
+            var testDbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseSqlServer(testConnectionString)
+                .Options;
 
-            _context = new ApplicationDbContext(options);
+            _testContext = new ApplicationDbContext(testDbContextOptions);
 
-            _context.Products.RemoveRange(_context.Products);
-            await _context.SaveChangesAsync();
+
+            _testContext.Products.RemoveRange(_testContext.Products);
+            _testContext.Brands.RemoveRange(_testContext.Brands);
+
+            await _testContext.SaveChangesAsync();
+
         }
 
         [Test]
@@ -35,18 +54,18 @@ namespace SportsGoods.App.Tests
             var solutionDirectory = GetSolutionDirectory();
             var testDataDirectory = Path.Combine(solutionDirectory, "SolutionItems");
             var xmlFilePath = Path.Combine(testDataDirectory, "products.xml");
-          
+
             var repositoryMock = new Mock<IProductRepository>();
 
-            var productService = new ProductService(_context, repositoryMock.Object);
+            var brandService = new BrandService(_testContext);
+            var productService = new ProductService(_testContext, repositoryMock.Object);
 
-            var initialProductCount = _context.Products.Count();
+            await brandService.ExtractBrandsFromXmlAsync(xmlFilePath);
 
             await productService.SeedProductsFromXmlAsync(xmlFilePath);
 
-            var finalProductCount = _context.Products.Count();
-
-            Assert.That(finalProductCount, Is.GreaterThan(initialProductCount));
+            var productCount = await _testContext.Products.CountAsync();
+            Assert.That(productCount, Is.GreaterThan(0));
         }
 
         [Test]
@@ -56,13 +75,13 @@ namespace SportsGoods.App.Tests
             var testDataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "TestData");
             var xmlFilePath = Path.Combine(testDataDirectory, xmlFileName);
 
-            var productService = new ProductService(_context);
+            var productService = new ProductService(_testContext);
 
-            var initialProductCount = _context.Products.Count();
+            var initialProductCount = _testContext.Products.Count();
 
             await productService.SeedProductsFromXmlAsync(xmlFilePath);
 
-            var finalProductCount = _context.Products.Count();
+            var finalProductCount = _testContext.Products.Count();
             Assert.That(initialProductCount, Is.EqualTo(finalProductCount));
         }
 
@@ -71,7 +90,7 @@ namespace SportsGoods.App.Tests
         {
             var nonExistentXmlFilePath = "nonexistent.xml";
 
-            var productService = new ProductService(_context);
+            var productService = new ProductService(_testContext);
 
             Assert.ThrowsAsync<FileNotFoundException>(async () =>
             await productService.SeedProductsFromXmlAsync(nonExistentXmlFilePath));
@@ -110,7 +129,7 @@ namespace SportsGoods.App.Tests
             mockProductRepository.Setup(p => p.GetAllAsync()).ReturnsAsync(existingProducts);
             mockProductRepository.Setup(p => p.Add(It.IsAny<Product>())).Verifiable();
 
-            var productService = new ProductService(_context, mockProductRepository.Object);
+            var productService = new ProductService(_testContext, mockProductRepository.Object);
 
             await productService.SeedProductsFromXmlAsync(xmlFilePath);
 
