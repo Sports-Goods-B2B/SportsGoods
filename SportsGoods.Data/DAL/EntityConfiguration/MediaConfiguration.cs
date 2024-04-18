@@ -5,7 +5,6 @@ using SportsGoods.Core.Models;
 namespace SportsGoods.Data.DAL.EntityConfiguration
 {
     public class MediaConfiguration : IEntityTypeConfiguration<Media>
-
     {
         public void Configure(EntityTypeBuilder<Media> builder)
         {
@@ -14,7 +13,8 @@ namespace SportsGoods.Data.DAL.EntityConfiguration
              .IsRequired();
 
             builder.Property(p => p.Blob)
-             .IsRequired();
+             .IsRequired()
+             .HasColumnType("varbinary(MAX)");
 
             builder.ToTable("Media");
         }

@@ -1,0 +1,74 @@
+﻿@using SportsGoods.Web.View_Models
+@{
+    @model ProductsListViewModel
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="~/js/paginationFormScript.js"></script>
+    <title>Product Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="paginationForm">
+    <label for="pageNumber">Page Number:</label>
+    <input type="number" id="pageNumber" name="pageNumber" value="@Model.PageNumber" min="1">
+    
+    <label for="pageSize">Page Size:</label>
+    <input type="number" id="pageSize" name="pageSize" value="@Model.PageSize" min="1">
+    
+    <button type="submit">Go</button>
+</form>
+
+
+    <h2>Product Table</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Product Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.Title</td>
+                    <td>@product.Description</td>
+                    <td>@product.Brand?.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.Quantity</td>
+                    <td>@product.ProductCategory</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</body>
+</html>
