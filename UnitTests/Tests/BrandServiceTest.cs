@@ -31,14 +31,6 @@ namespace SportsGoods.App.Tests.Tests
         [SetUp]
         public async Task Setup()
         {
-            var testConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=SportsGoodsTest;Trusted_Connection=True;TrustServerCertificate=True;";
-
-            var testDbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer(testConnectionString)
-                .Options;
-
-            _testContext = new ApplicationDbContext(testDbContextOptions);
-
             _testContext.Products.RemoveRange(_testContext.Products);
             _testContext.Brands.RemoveRange(_testContext.Brands);
 

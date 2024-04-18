@@ -18,7 +18,10 @@ namespace SportsGoods.Data.DAL.EntityConfiguration
 
             builder.Property(p => p.History);
 
-            builder.Property(p => p.Picture);
+            builder.HasOne(p => p.Picture)
+             .WithOne()
+             .HasForeignKey<Media>()
+             .IsRequired(false);
 
 
             builder.ToTable("Brands");
