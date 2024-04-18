@@ -12,20 +12,20 @@ namespace SportsGoods.App.Tests.Tests
     [TestFixture]
     public class BrandServiceTest
     {
-        private static ApplicationDbContext _context = null!;
-        private ApplicationDbContext _testContext = null!;
+        private static ApplicationDbContext _testContext = null!;
 
         [OneTimeSetUp]
         public static async Task OneTimeSetUp()
         {
-            var connectionString = "Server=.;Database=SportsGoods;Trusted_Connection=True;TrustServerCertificate=True;";
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer(connectionString)
+            var testConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=SportsGoodsTest;Trusted_Connection=True;TrustServerCertificate=True;";
+
+            var testDbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseSqlServer(testConnectionString)
                 .Options;
 
-            _context = new ApplicationDbContext(options);
+             _testContext = new ApplicationDbContext(testDbContextOptions);
 
-            await _context.Database.MigrateAsync();
+            await _testContext.Database.MigrateAsync();
         }
 
         [SetUp]

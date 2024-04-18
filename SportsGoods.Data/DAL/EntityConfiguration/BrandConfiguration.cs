@@ -20,6 +20,7 @@ namespace SportsGoods.Data.DAL.EntityConfiguration
 
             builder.Property(p => p.Picture);
 
+
             builder.ToTable("Brands");
         }
     }
