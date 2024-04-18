@@ -10,6 +10,24 @@
 		<ProductCategory>Kitchen &amp; Dining</ProductCategory>
 	</Product>
 	<Product>
+		<Id>d6a3018d-dedb-41ac-81fd-71de0a6c2619</Id>
+		<Title>Test create product but dont create brand</Title>
+		<Description>Tranquil Waters Bath Bomb - Indulge in a relaxing bath experience</Description>
+		<Brand>SerenityStyle</Brand>
+		<Price>17.65</Price>
+		<Quantity>90</Quantity>
+		<ProductCategory>Kitchen &amp; Dining</ProductCategory>
+	</Product>
+	<Product>
+		<Id>13c947a2-38dd-40dc-beac-9cd79347d6bf</Id>
+		<Title>Test create product and create brand</Title>
+		<Description>Tranquil Waters Bath Bomb - Indulge in a relaxing bath experience</Description>
+		<Brand>TestBrand</Brand>
+		<Price>17.65</Price>
+		<Quantity>90</Quantity>
+		<ProductCategory>Kitchen &amp; Dining</ProductCategory>
+	</Product>
+	<Product>
 		<Id>a0820c36-70b7-4e76-9264-c0b26956f846</Id>
 		<Title>Enchanted Elegance Candle</Title>
 		<Description>Moonlit Garden Wall Art - Add enchantment to your walls</Description>

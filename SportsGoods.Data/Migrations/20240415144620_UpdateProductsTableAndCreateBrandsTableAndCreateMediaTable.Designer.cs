@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsGoods.Data.DAL;
 
@@ -11,9 +12,11 @@ using SportsGoods.Data.DAL;
 namespace SportsGoods.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240415144620_UpdateProductsTableAndCreateBrandsTableAndCreateMediaTable")]
+    partial class UpdateProductsTableAndCreateBrandsTableAndCreateMediaTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,7 +245,12 @@ namespace SportsGoods.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("PictureId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PictureId");
 
                     b.ToTable("Brands", (string)null);
                 });
@@ -250,6 +258,7 @@ namespace SportsGoods.Data.Migrations
             modelBuilder.Entity("SportsGoods.Core.Models.Media", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("Blob")
@@ -347,11 +356,13 @@ namespace SportsGoods.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SportsGoods.Core.Models.Media", b =>
+            modelBuilder.Entity("SportsGoods.Core.Models.Brand", b =>
                 {
-                    b.HasOne("SportsGoods.Core.Models.Brand", null)
-                        .WithOne("Picture")
-                        .HasForeignKey("SportsGoods.Core.Models.Media", "Id");
+                    b.HasOne("SportsGoods.Core.Models.Media", "Picture")
+                        .WithMany()
+                        .HasForeignKey("PictureId");
+
+                    b.Navigation("Picture");
                 });
 
             modelBuilder.Entity("SportsGoods.Core.Models.Product", b =>
@@ -361,11 +372,6 @@ namespace SportsGoods.Data.Migrations
                         .HasForeignKey("BrandId");
 
                     b.Navigation("Brand");
-                });
-
-            modelBuilder.Entity("SportsGoods.Core.Models.Brand", b =>
-                {
-                    b.Navigation("Picture");
                 });
 #pragma warning restore 612, 618
         }

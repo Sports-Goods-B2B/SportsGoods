@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SportsGoods.App.Helper;
 using SportsGoods.App.Services;
 using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
@@ -25,6 +26,7 @@ builder.Services.AddMvc();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<ProductService>();
+builder.Services.AddTransient<BrandService>();
 
 var app = builder.Build();
 
@@ -56,12 +58,12 @@ app.MapRazorPages();
 using (var scope = app.Services.CreateScope())
 {
     var productService = scope.ServiceProvider.GetRequiredService<ProductService>();
-    var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-    var assemblyDirectory = Path.GetDirectoryName(assemblyLocation);
-    var solutionDirectory = Path.Combine(assemblyDirectory, "..", "..", "..", "..");
-    var testDataDirectory = Path.Combine(solutionDirectory, "SolutionItems");
-    var productsXmlPath = Path.Combine(testDataDirectory, "products.xml");
-    await productService.SeedProductsFromXmlAsync(productsXmlPath);
+    var brandService = scope.ServiceProvider.GetRequiredService<BrandService>();
+
+    var brandHandler = new BrandHandler(brandService);
+    var productHandler = new ProductHandler(productService);
+    brandHandler.SetNextHandler(productHandler);
+    await brandHandler.HandleDataFromXML();
 }
 
 app.Run();

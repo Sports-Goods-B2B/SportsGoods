@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dataset>
+	<Product>
+		<Id>26798b8f-9390-4928-8162-f1455a4f121c</Id>
+		<Title>Test Product 1 for brand testing </Title>
+		<Description>Tranquil Waters Bath Bomb - Indulge in a relaxing bath experience</Description>
+		<Brand>DuplicatedBrandName</Brand>
+		<Price>17.65</Price>
+		<Quantity>90</Quantity>
+		<ProductCategory>Kitchen &amp; Dining</ProductCategory>
+	</Product>
+	<Product>
+		<Id>0122680b-a992-45b5-baac-bd586ab4b576</Id>
+		<Title>Test Product 2 for brand testing</Title>
+		<Description>Moonlit Garden Wall Art - Add enchantment to your walls</Description>
+		<Brand>DuplicatedBrandName</Brand>
+		<Price>75.79</Price>
+		<Quantity>22</Quantity>
+		<ProductCategory>Baby &amp; Nursery</ProductCategory>
+	</Product>
+</dataset>

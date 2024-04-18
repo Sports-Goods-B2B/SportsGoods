@@ -15,8 +15,10 @@ namespace SportsGoods.Data.DAL.EntityConfiguration
             builder.Property(p => p.Title)
             .IsRequired();
 
-            builder.Property(p => p.Brand)
-            .IsRequired();
+            builder.HasOne(p => p.Brand)
+             .WithMany() 
+             .HasForeignKey(p => p.BrandId) 
+             .IsRequired(false);
 
             builder.Property(p => p.Quantity)
             .IsRequired();

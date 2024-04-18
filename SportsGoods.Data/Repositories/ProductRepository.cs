@@ -14,7 +14,7 @@ namespace SportsGoods.Data.Repositories
             _context = context;
         }
 
-        public async Task<Product> GetByIdAsync(Guid id)
+        public async Task<Product?> GetByIdAsync(Guid id)
         {
             return await _context.Products.FindAsync(id);
         }

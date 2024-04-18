@@ -63,8 +63,19 @@ namespace SportsGoods.App.Tests.Tests
                           .ReturnsAsync((int page, byte size) =>
                           {
                               var products = Enumerable.Range(1, 100)
-                                                        .Select(i => new Product { Id = Guid.NewGuid(), Title = $"Product {i}", Price = i * 10 })
+                                                        .Select(i => new Product
+                                                        {
+                                                            Id = Guid.NewGuid(),
+                                                            Title = $"Product {i}",
+                                                            Price = i * 10,
+                                                            Brand = new Brand
+                                                            {
+                                                                Id = Guid.NewGuid(),
+                                                                Name = $"Brand {i}"
+                                                            }
+                                                        })
                                                         .ToList();
+
                               var pagedProducts = new PagedResult<Product>
                               {
                                   Items = products.Skip((page - 1) * size).Take(size).ToList(),
@@ -96,7 +107,17 @@ namespace SportsGoods.App.Tests.Tests
                           .ReturnsAsync((int page, byte size) =>
                           {
                               var products = Enumerable.Range(1, 100)
-                                                        .Select(i => new Product { Id = Guid.NewGuid(), Title = $"Product {i}", Price = i * 10 })
+                                                        .Select(i => new Product
+                                                        {
+                                                            Id = Guid.NewGuid(),
+                                                            Title = $"Product {i}",
+                                                            Price = i * 10,
+                                                            Brand = new Brand
+                                                            {
+                                                                Id = Guid.NewGuid(),
+                                                                Name = $"Brand {i}"
+                                                            }
+                                                        })
                                                         .ToList();
                               var totalCount = products.Count;
                               return new PagedResult<Product>
@@ -132,7 +153,17 @@ namespace SportsGoods.App.Tests.Tests
                           .ReturnsAsync((int page, byte size) =>
                           {
                               var products = Enumerable.Range(1, 100)
-                                                        .Select(i => new Product { Id = Guid.NewGuid(), Title = $"Product {i}", Price = i * 10 })
+                                                         .Select(i => new Product
+                                                         {
+                                                             Id = Guid.NewGuid(),
+                                                             Title = $"Product {i}",
+                                                             Price = i * 10,
+                                                             Brand = new Brand
+                                                             {
+                                                                 Id = Guid.NewGuid(),
+                                                                 Name = $"Brand {i}"
+                                                             }
+                                                         })
                                                         .ToList();
                               var totalCount = products.Count;
                               return new PagedResult<Product>
@@ -156,19 +187,57 @@ namespace SportsGoods.App.Tests.Tests
         {
             var products = new List<Product>
             {
-                new Product { Id = Guid.NewGuid(), Title = "Product 1", Price = 10 },
-                new Product { Id = Guid.NewGuid(), Title = "Product 2", Price = 20 },
+                new Product
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Product 1",
+                    Price = 10,
+                    Brand = new Brand
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "TestBrand1"
+                    }
+                },
+                new Product
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Product 2",
+                    Price = 20,
+                    Brand = new Brand{Id = Guid.NewGuid(), Name = "TestBrand2"
+                    }
+                },
             };
 
             _context.Products.AddRange(products);
             _context.SaveChanges();
         }
+
         private PagedResult<Product> GetTestProducts()
         {
             var products = new List<Product>
             {
-                new Product { Id = Guid.NewGuid(), Title = "Product 1", Price = 10 },
-                new Product { Id = Guid.NewGuid(), Title = "Product 2", Price = 20 },
+                new Product
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Product 1",
+                    Price = 10,
+                    Brand = new Brand
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Brand 1"
+                    }
+                },
+                new Product
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Product 2",
+                    Price = 20,
+                    Brand = new Brand
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Brand 2"
+                    }
+                },
             };
 
             return new PagedResult<Product>

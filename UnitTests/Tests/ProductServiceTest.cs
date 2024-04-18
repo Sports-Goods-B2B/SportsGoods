@@ -12,21 +12,30 @@ namespace SportsGoods.App.Tests
     [TestFixture]
     public class ProductServiceTests
     {
-        private ApplicationDbContext _context = null!;
+        private static ApplicationDbContext _testContext = null!;
+
+        [OneTimeSetUp]
+        public static async Task OneTimeSetUp()
+        {
+            var testConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=SportsGoodsTest;Trusted_Connection=True;TrustServerCertificate=True;";
+
+            var testDbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseSqlServer(testConnectionString)
+                .Options;
+
+            _testContext = new ApplicationDbContext(testDbContextOptions);
+
+            await _testContext.Database.MigrateAsync();
+        }
 
         [SetUp]
         public async Task Setup()
         {
-            var connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=SportsGoodsTest;Trusted_Connection=True;TrustServerCertificate=True;";
+            _testContext.Products.RemoveRange(_testContext.Products);
+            _testContext.Brands.RemoveRange(_testContext.Brands);
 
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer(connectionString)
-            .Options;
+            await _testContext.SaveChangesAsync();
 
-            _context = new ApplicationDbContext(options);
-
-            _context.Products.RemoveRange(_context.Products);
-            await _context.SaveChangesAsync();
         }
 
         [Test]
@@ -37,17 +46,16 @@ namespace SportsGoods.App.Tests
             var xmlFilePath = Path.Combine(testDataDirectory, "products.xml");
           
             var repositoryMock = new Mock<IProductRepository>();
+          
+            var brandService = new BrandService(_testContext);
+            var productService = new ProductService(_testContext, repositoryMock.Object);
 
-            var productService = new ProductService(_context, repositoryMock.Object);
-
-            var initialProductCount = _context.Products.Count();
+            await brandService.ExtractBrandsFromXmlAsync(xmlFilePath);
 
             await productService.SeedProductsFromXmlAsync(xmlFilePath);
 
-            var finalProductCount = _context.Products.Count();
-
-            Assert.That(finalProductCount, Is.GreaterThan(initialProductCount));
-
+            var productCount = await _testContext.Products.CountAsync();
+            Assert.That(productCount, Is.GreaterThan(0));
         }
 
         [Test]
@@ -57,13 +65,13 @@ namespace SportsGoods.App.Tests
             var testDataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "TestData");
             var xmlFilePath = Path.Combine(testDataDirectory, xmlFileName);
 
-            var productService = new ProductService(_context);
+            var productService = new ProductService(_testContext);
 
-            var initialProductCount = _context.Products.Count();
+            var initialProductCount = _testContext.Products.Count();
 
             await productService.SeedProductsFromXmlAsync(xmlFilePath);
 
-            var finalProductCount = _context.Products.Count();
+            var finalProductCount = _testContext.Products.Count();
             Assert.That(initialProductCount, Is.EqualTo(finalProductCount));
         }
 
@@ -72,7 +80,7 @@ namespace SportsGoods.App.Tests
         {
             var nonExistentXmlFilePath = "nonexistent.xml";
 
-            var productService = new ProductService(_context);
+            var productService = new ProductService(_testContext);
 
             Assert.ThrowsAsync<FileNotFoundException>(async () =>
             await productService.SeedProductsFromXmlAsync(nonExistentXmlFilePath));
@@ -85,14 +93,22 @@ namespace SportsGoods.App.Tests
             var testDataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "TestData");
             var xmlFilePath = Path.Combine(testDataDirectory, xmlFileName);
 
+
+
             var existingProducts = new List<Product>
             {
+                
                 new Product
                 {
                     Id = new Guid("5f550c07-003e-4534-af07-9abbfacdb540"),
                     Title = "Cosmic Cascade Wall Art",
                     Description = "Tranquil Waters Bath Bomb - Indulge in a relaxing bath experience",
-                    Brand = "SerenityStyle",
+                    Brand = new Brand
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "SerenityStyle",
+                        History = "Some History"
+                    },
                     Price = 17.65,
                     Quantity = 90,
                     ProductCategory = "Kitchen &amp; Dining"
@@ -103,7 +119,7 @@ namespace SportsGoods.App.Tests
             mockProductRepository.Setup(p => p.GetAllAsync()).ReturnsAsync(existingProducts);
             mockProductRepository.Setup(p => p.Add(It.IsAny<Product>())).Verifiable();
 
-            var productService = new ProductService(_context, mockProductRepository.Object);
+            var productService = new ProductService(_testContext, mockProductRepository.Object);
 
             await productService.SeedProductsFromXmlAsync(xmlFilePath);
 

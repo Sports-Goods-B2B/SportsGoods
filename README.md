@@ -24,3 +24,5 @@ To test the functionality of the GetAllMethods end-point:
 3. There are default values on the parameters but you can set custom ones for yourself (keep in mind that they have to be positive or 0, otherwise we have handled and send an exception message)
 4. If the parameters are correct you should see a list of products with a count of the pageSize parameter.
 
+Update-Product Summary: 
+There are different brands in our site. Each product has a brand. One brand can have many products.
