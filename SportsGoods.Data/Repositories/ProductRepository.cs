@@ -43,12 +43,9 @@ namespace SportsGoods.Data.Repositories
               .Take(pageSizeInt)
               .ToListAsync();
 
-            var brands = await _context.Brands.ToListAsync();
-
-            foreach (var product in products)
-            {
-                product.Brand = brands.FirstOrDefault(b => b.Id == product.BrandId);
-            }
+            var brandIds = products.Select(x => x.BrandId).ToList();
+            var brands = await _context.Brands.Where(x => brandIds.Contains(x.Id)).ToListAsync();
+            products.ForEach(product => product.Brand = brands.FirstOrDefault(b => b.Id == product.BrandId));
 
             var totalCount = await _context.Products.CountAsync(); 
 

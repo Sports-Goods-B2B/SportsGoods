@@ -11,7 +11,7 @@ namespace SportsGoods.Web.Converter
             {
                 Title = product.Title,
                 Description = product.Description,
-                Brand = product.Brand,
+                BrandName = product.Brand?.Name,
                 Price = product.Price,
                 Quantity = product.Quantity,
                 ProductCategory = product.ProductCategory
