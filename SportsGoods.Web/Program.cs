@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using SportsGoods.App.Helper;
 using SportsGoods.App.QueryHandlers;
 using SportsGoods.App.Services;
@@ -7,7 +6,6 @@ using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
 using SportsGoods.Data.Repositories;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 

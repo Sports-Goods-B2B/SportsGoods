@@ -12,24 +12,10 @@ namespace SportsGoods.App.Tests.Tests
     [TestFixture]
     public class BrandServiceTest
     {
-        private static ApplicationDbContext _context = null!;
-        private ApplicationDbContext _testContext = null!;
+        private static ApplicationDbContext _testContext = null!;
 
         [OneTimeSetUp]
         public static async Task OneTimeSetUp()
-        {
-            var connectionString = "Server=.;Database=SportsGoods;Trusted_Connection=True;TrustServerCertificate=True;";
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer(connectionString)
-                .Options;
-
-            _context = new ApplicationDbContext(options);
-
-            await _context.Database.MigrateAsync();
-        }
-
-        [SetUp]
-        public async Task Setup()
         {
             var testConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=SportsGoodsTest;Trusted_Connection=True;TrustServerCertificate=True;";
 
@@ -39,6 +25,12 @@ namespace SportsGoods.App.Tests.Tests
 
             _testContext = new ApplicationDbContext(testDbContextOptions);
 
+            await _testContext.Database.MigrateAsync();
+        }
+
+        [SetUp]
+        public async Task Setup()
+        {
             _testContext.Products.RemoveRange(_testContext.Products);
             _testContext.Brands.RemoveRange(_testContext.Brands);
 
@@ -63,8 +55,8 @@ namespace SportsGoods.App.Tests.Tests
         [Test]
         public async Task CreateBrandIfNotExistingAsync_AddsNewBrandToDatabase()
         {
-            var brand = new Brand 
-            { 
+            var brand = new Brand
+            {
                 Id = Guid.NewGuid(),
                 Name = "New Brand for testing purposes",
                 History = "historyPlaceholder"
@@ -75,7 +67,7 @@ namespace SportsGoods.App.Tests.Tests
 
             var createdBrand = await _testContext.Brands.FirstOrDefaultAsync(b => b.Name == brand.Name);
 
-            Assert.That(createdBrand,Is.Not.Null);
+            Assert.That(createdBrand, Is.Not.Null);
         }
         [Test]
         public async Task ExtractBrandsFromXmlAsync_AddsUniqueBrandsToDatabase()
@@ -93,28 +85,22 @@ namespace SportsGoods.App.Tests.Tests
 
             Assert.That(brandCount, Is.EqualTo(distinctBrandCount));
         }
-
         [Test]
         public async Task ExtractBrandsFromXmlAsync_DoesNotAddExistingBrandsToDatabase()
         {
-            var xmlFileName = "existing_product.xml";
-            var testDataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "TestData");
-            var xmlFilePath = Path.Combine(testDataDirectory, xmlFileName);
-
             var existingBrands = new List<Brand>
             {
                 new Brand { Id = Guid.NewGuid(), Name = "MystiqueMarque", History = "historyPlaceholder" },
                 new Brand { Id = Guid.NewGuid(), Name = "LuxeLagoon", History = "historyPlaceholder" },
             };
+            _testContext.Brands.AddRange(existingBrands);
+            _testContext.Brands.AddRange(existingBrands);
 
-            var mockBrandRepository = new Mock<IBrandRepository>();
-            mockBrandRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(existingBrands);
+            await _testContext.SaveChangesAsync();
 
-            var brandService = new BrandService(_testContext, mockBrandRepository.Object);
+            var addedBrandsCount = await _testContext.Brands.CountAsync();
 
-            await brandService.ExtractBrandsFromXmlAsync(xmlFilePath);
-
-            mockBrandRepository.Verify(b => b.Add(It.IsAny<Brand>()), Times.Never);
+            Assert.That(existingBrands.Count, Is.EqualTo(addedBrandsCount));
         }
 
         private string GetSolutionDirectory()

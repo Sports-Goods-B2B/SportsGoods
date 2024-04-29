@@ -12,25 +12,10 @@ namespace SportsGoods.App.Tests
     [TestFixture]
     public class ProductServiceTests
     {
-        private static ApplicationDbContext _context = null!;
-        private ApplicationDbContext _testContext = null!;
-
+        private static ApplicationDbContext _testContext = null!;
 
         [OneTimeSetUp]
         public static async Task OneTimeSetUp()
-        {
-            var connectionString = "Server=.;Database=SportsGoods;Trusted_Connection=True;TrustServerCertificate=True;";
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer(connectionString)
-                .Options;
-
-            _context = new ApplicationDbContext(options);
-
-            await _context.Database.MigrateAsync();
-        }
-
-        [SetUp]
-        public async Task Setup()
         {
             var testConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=SportsGoodsTest;Trusted_Connection=True;TrustServerCertificate=True;";
 
@@ -40,12 +25,16 @@ namespace SportsGoods.App.Tests
 
             _testContext = new ApplicationDbContext(testDbContextOptions);
 
+            await _testContext.Database.MigrateAsync();
+        }
 
+        [SetUp]
+        public async Task Setup()
+        {
             _testContext.Products.RemoveRange(_testContext.Products);
             _testContext.Brands.RemoveRange(_testContext.Brands);
 
             await _testContext.SaveChangesAsync();
-
         }
 
         [Test]

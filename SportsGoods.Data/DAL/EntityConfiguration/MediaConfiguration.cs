@@ -5,6 +5,7 @@ using SportsGoods.Core.Models;
 namespace SportsGoods.Data.DAL.EntityConfiguration
 {
     public class MediaConfiguration : IEntityTypeConfiguration<Media>
+
     {
         public void Configure(EntityTypeBuilder<Media> builder)
         {

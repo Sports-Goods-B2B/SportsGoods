@@ -10,16 +10,10 @@ namespace SportsGoods.App.Services
 
     {
         private readonly ApplicationDbContext _context;
-        private readonly IBrandRepository _brandRepository;
 
         public BrandService(ApplicationDbContext context)
         {
             _context = context;
-        }
-        public BrandService(ApplicationDbContext context, IBrandRepository brandRepository)
-        {
-            _context = context;
-            _brandRepository = brandRepository;
         }
 
         public async Task ExtractBrandsFromXmlAsync(string xmlFilePath)
