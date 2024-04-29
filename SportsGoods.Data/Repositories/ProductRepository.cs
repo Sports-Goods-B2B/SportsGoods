@@ -43,6 +43,13 @@ namespace SportsGoods.Data.Repositories
               .Take(pageSizeInt)
               .ToListAsync();
 
+
+
+            foreach (var product in products)
+            {
+                product.Brand = await _context.Brands.FindAsync(product.BrandId);
+            }
+
             var totalCount = await _context.Products.CountAsync(); 
 
             return new PagedResult<Product>

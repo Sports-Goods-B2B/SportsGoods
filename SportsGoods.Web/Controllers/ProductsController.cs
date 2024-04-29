@@ -28,10 +28,7 @@ namespace SportsGoods.Web.Controllers
 
             foreach (var dto in result.Items)
             {
-                var brandName = await GetBrandName(dto.BrandId); 
                 var productViewModel = ProductConverter.ConvertToViewModel(dto);
-                productViewModel.Brand = await _context.Brands.FindAsync(dto.BrandId);
-                productViewModel.Brand.Name = brandName; 
                 productViewModels.Add(productViewModel);
             }
 
@@ -45,17 +42,6 @@ namespace SportsGoods.Web.Controllers
             };
 
             return View(viewModel);
-        }
-
-        private async Task<string> GetBrandName(Guid? brandId)
-        {
-            if (brandId == null)
-            {
-                return ""; 
-            }
-
-            var brand = await _context.Brands.FindAsync(brandId);
-            return brand?.Name ?? "";
         }
     }
 }
