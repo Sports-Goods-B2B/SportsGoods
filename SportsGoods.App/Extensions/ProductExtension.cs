@@ -11,7 +11,7 @@ namespace SportsGoods.App.Extensions
             {
                 Title = product.Title,
                 Description = product.Description,
-                Brand = product.Brand,
+                BrandId = product.BrandId,
                 Price = product.Price,
                 Quantity = product.Quantity,
                 ProductCategory = product.ProductCategory

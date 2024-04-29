@@ -33,7 +33,5 @@ namespace SportsGoods.App.QueryHandlers
                 TotalCount = pagedProducts.TotalCount
             };
         }
-
-
     }
 }

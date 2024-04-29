@@ -52,6 +52,7 @@
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Product Category</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -64,6 +65,10 @@
                     <td>@product.Price</td>
                     <td>@product.Quantity</td>
                     <td>@product.ProductCategory</td>
+                    <td>
+                        <button class="btn-primary mb-1">Update</button>
+                        <button class="btn-danger">Remove</button>
+                    </td>
                 </tr>
             }
         </tbody>
