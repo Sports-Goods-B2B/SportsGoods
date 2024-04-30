@@ -1,11 +1,17 @@
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SportsGoods.App.CommandHandlers;
+using SportsGoods.App.Commands;
+using SportsGoods.App.DTOs;
 using SportsGoods.App.Helper;
+using SportsGoods.App.Queries;
 using SportsGoods.App.QueryHandlers;
 using SportsGoods.App.Services;
 using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
 using SportsGoods.Data.Repositories;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +33,10 @@ builder.Services.AddMvc();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<ProductService>();
 builder.Services.AddTransient<BrandService>();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllProductsQueryHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+builder.Services.AddTransient<IRequestHandler<GetAllProductsQuery, PagedResult<ProductDTO>>, GetAllProductsQueryHandler>();
+builder.Services.AddTransient<IRequestHandler<UpdateProductCommand, Unit>, UpdateProductCommandHandler>();
+
 
 var app = builder.Build();
 

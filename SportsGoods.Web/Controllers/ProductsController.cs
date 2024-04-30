@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SportsGoods.App.Commands;
 using SportsGoods.App.Queries;
 using SportsGoods.Data.DAL;
 using SportsGoods.Web.Converter;
@@ -41,6 +42,35 @@ namespace SportsGoods.Web.Controllers
             };
 
             return View(viewModel);
+        }
+        //[HttpGet("/products/{productId}")]
+        //public async Task<IActionResult> GetProduct(Guid productId)
+        //{
+        //    var product = await _context.Products.FindAsync(productId);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(product);
+        //}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProduct(Guid id, [FromBody] UpdateProductCommand command)
+        {
+            if (id != command.ProductId)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _mediator.Send(command);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while updating the product.");
+            }
+
+            return NoContent();
         }
     }
 }

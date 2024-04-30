@@ -9,7 +9,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <script src="~/js/paginationFormScript.js"></script>
+    <script src="~/js/updateProductScript.js"></script>
+
     <title>Product Table</title>
     <style>
         table {
@@ -26,6 +29,39 @@
         th {
             background-color: #f2f2f2;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            z-index: 9999; 
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
     </style>
 </head>
 <body>
@@ -39,8 +75,6 @@
     
     <button type="submit">Go</button>
 </form>
-
-
     <h2>Product Table</h2>
 
     <table>
@@ -59,14 +93,14 @@
             @foreach (var product in Model.Products)
             {
                 <tr>
-                    <td>@product.Title</td>
-                    <td>@product.Description</td>
-                    <td>@product.Brand?.Name</td>
-                    <td>@product.Price</td>
-                    <td>@product.Quantity</td>
-                    <td>@product.ProductCategory</td>
+                    <td id="titleField">@product.Title</td>
+                    <td id="descriptionField">@product.Description</td>
+                    <td id="brandField">@product.Brand</td>
+                    <td id="priceField">@product.Price</td>
+                    <td id="quantityField">@product.Quantity</td>
+                    <td id="categoryField">@product.ProductCategory</td>
                     <td>
-                        <button class="btn-primary mb-1">Update</button>
+                        <button class="btn-primary mb-1 update-btn">Update</button>
                         <button class="btn-danger">Remove</button>
                     </td>
                 </tr>
@@ -74,6 +108,35 @@
         </tbody>
 
     </table>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Product Details</h2>
+
+            <form id="productForm">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="description">Description:</label>
+                <textarea id="description" name="description"></textarea>
+
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" name="brand" required>
+
+                <label for="price">Price:</label>
+                <textarea id="price" name="price"></textarea>
+
+                <label for="quantity">Quantity:</label>
+                <textarea id="quantity" name="quantity"></textarea>
+
+                <label for="category">Category:</label>
+                <textarea id="category" name="category"></textarea>
+
+                <button type="submit">Apply</button>
+            </form>
+        </div>
+    </div>
 
 </body>
 </html>
