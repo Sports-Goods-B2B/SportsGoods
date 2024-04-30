@@ -23,7 +23,6 @@ namespace SportsGoods.Data.DAL.EntityConfiguration
              .HasForeignKey<Media>()
              .IsRequired(false);
 
-
             builder.ToTable("Brands");
         }
     }

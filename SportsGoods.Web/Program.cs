@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using SportsGoods.App.Helper;
+using SportsGoods.App.QueryHandlers;
 using SportsGoods.App.Services;
 using SportsGoods.Core.Interfaces;
 using SportsGoods.Core.Models;
 using SportsGoods.Data.DAL;
 using SportsGoods.Data.Repositories;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +27,7 @@ builder.Services.AddMvc();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<ProductService>();
 builder.Services.AddTransient<BrandService>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllProductsQueryHandler).Assembly));
 
 var app = builder.Build();
 
@@ -51,7 +52,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=index}/{id?}");
 app.MapRazorPages();
 
 

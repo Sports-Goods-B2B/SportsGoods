@@ -35,7 +35,6 @@ namespace SportsGoods.App.Tests
             _testContext.Brands.RemoveRange(_testContext.Brands);
 
             await _testContext.SaveChangesAsync();
-
         }
 
         [Test]
